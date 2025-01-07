@@ -3,15 +3,23 @@ class Data:
         # Inisialisasi list untuk menyimpan data
         self.records = []
 
-    def add_record(self, name, age, major):
+    def add_record(self, name, age, major, nim, score):
         """
         Menambahkan data baru ke dalam records.
 
         :param name: Nama mahasiswa (string)
         :param age: Umur mahasiswa (integer)
         :param major: Jurusan mahasiswa (string)
+        :param nim: Nomor Induk Mahasiswa (string)
+        :param score: Nilai mahasiswa (float)
         """
-        self.records.append({"Name": name, "Age": age, "Major": major})
+        self.records.append({
+            "Name": name,
+            "Age": age,
+            "Major": major,
+            "NIM": nim,
+            "Score": score
+        })
 
     def get_all_records(self):
         """
@@ -35,16 +43,16 @@ class View:
             return
 
         # Header tabel
-        print("+----------------+-----+---------------+")
-        print("| Name           | Age | Major         |")
-        print("+----------------+-----+---------------+")
+        print("+----------------+-----+---------------+-----------+-------+")
+        print("| Name           | Age | Major         | NIM       | Score |")
+        print("+----------------+-----+---------------+-----------+-------+")
         
         # Baris data
         for record in records:
-            print(f"| {record['Name']:<14} | {record['Age']:<3} | {record['Major']:<13} |")
+            print(f"| {record['Name']:<14} | {record['Age']:<3} | {record['Major']:<13} | {record['NIM']:<9} | {record['Score']:<5.2f} |")
         
         # Footer tabel
-        print("+----------------+-----+---------------+")
+        print("+----------------+-----+---------------+-----------+-------+")
 
 
 class Process:
@@ -79,8 +87,23 @@ class Process:
                 if not major.replace(" ", "").isalpha():
                     raise ValueError("Major should only contain letters and spaces.")
 
+                # Validasi NIM
+                nim = input("Enter NIM: ")
+                if not nim.strip():
+                    raise ValueError("NIM cannot be empty.")
+                if not nim.isdigit():
+                    raise ValueError("NIM must be numeric.")
+
+                # Validasi nilai
+                score = input("Enter score: ")
+                if not score.replace(".", "").isdigit():
+                    raise ValueError("Score must be a number.")
+                score = float(score)
+                if score < 0 or score > 100:
+                    raise ValueError("Score must be between 0 and 100.")
+
                 # Menambahkan data ke dalam class Data
-                self.data.add_record(name, int(age), major)
+                self.data.add_record(name, int(age), major, nim, score)
 
                 # Menanyakan apakah ingin menambahkan data lagi
                 more = input("Add another record? (y/n): ").lower()

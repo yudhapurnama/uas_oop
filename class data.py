@@ -3,15 +3,23 @@ class Data:
         # Inisialisasi list untuk menyimpan data
         self.records = []
 
-    def add_record(self, name, age, major):
+    def add_record(self, name, age, major, nim, score):
         """
         Menambahkan data baru ke dalam records.
 
         :param name: Nama mahasiswa (string)
         :param age: Umur mahasiswa (integer)
         :param major: Jurusan mahasiswa (string)
+        :param nim: Nomor Induk Mahasiswa (string)
+        :param score: Nilai mahasiswa (float)
         """
-        self.records.append({"Name": name, "Age": age, "Major": major})
+        self.records.append({
+            "Name": name,
+            "Age": age,
+            "Major": major,
+            "NIM": nim,
+            "Score": score
+        })
 
     def get_all_records(self):
         """
